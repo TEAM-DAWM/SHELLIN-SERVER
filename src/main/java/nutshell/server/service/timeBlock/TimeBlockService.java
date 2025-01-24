@@ -8,6 +8,7 @@ import nutshell.server.domain.User;
 import nutshell.server.dto.timeBlock.request.TimeBlockRequestDto;
 import nutshell.server.dto.timeBlock.response.TimeBlockTasksDto;
 import nutshell.server.dto.timeBlock.response.TimeBlocksDto;
+import nutshell.server.dto.timeBlock.response.TimeBlockDto;
 import nutshell.server.exception.BusinessException;
 import nutshell.server.exception.code.BusinessErrorCode;
 import nutshell.server.service.task.TaskRetriever;
@@ -43,6 +44,7 @@ public class TimeBlockService {
             throw new BusinessException(BusinessErrorCode.TIME_CONFLICT);
         }
         return timeBlockSaver.save(TimeBlock.builder()
+                .isAllTime(timeBlockRequestDto.isAllTime())
                 .task(task)
                 .startTime(timeBlockRequestDto.startTime())
                 .endTime(timeBlockRequestDto.endTime())
@@ -64,7 +66,7 @@ public class TimeBlockService {
             throw new BusinessException(BusinessErrorCode.TIME_CONFLICT);
         }
         TimeBlock timeBlock = timeBlockRetriever.findByTaskAndId(task, timeBlockId);
-        timeBlockEditor.updateTime(timeBlock,timeBlockRequestDto.startTime(), timeBlockRequestDto.endTime());
+        timeBlockEditor.updateTime(timeBlockRequestDto.isAllTime(), timeBlock,timeBlockRequestDto.startTime(), timeBlockRequestDto.endTime());
     }
 
     @Transactional
@@ -93,7 +95,7 @@ public class TimeBlockService {
                                 .id(task.getId())
                                 .name(task.getName())
                                 .status(task.getStatus().getContent())
-                                .timeBlocks(timeBlockRetriever.findAllByTaskIdAndTimeRange(task, startTime, endTime))
+                                .timeBlocks(timeBlockRetriever.findAllByTaskIdAndTimeRange(task, startTime, endTime).stream().map(TimeBlockDto::of).toList())
                                 .build()
                 ).toList();
         return TimeBlockTasksDto.builder()

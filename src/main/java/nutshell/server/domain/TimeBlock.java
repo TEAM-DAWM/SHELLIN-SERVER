@@ -16,6 +16,9 @@ public class TimeBlock {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="is_all_time")
+    private Boolean isAllTime;
+
     @Column(name="start_time", nullable = false)
     private LocalDateTime startTime;
 
@@ -33,7 +36,8 @@ public class TimeBlock {
     private Task task;
 
     @Builder
-    public TimeBlock(LocalDateTime startTime, LocalDateTime endTime, Task task) {
+    public TimeBlock(Boolean isAllTime, LocalDateTime startTime, LocalDateTime endTime, Task task) {
+        this.isAllTime = isAllTime;
         this.startTime = startTime;
         this.endTime = endTime;
         this.task = task;
@@ -41,7 +45,8 @@ public class TimeBlock {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public void updateTimeBlock(LocalDateTime startTime, LocalDateTime endTime) {
+    public void updateTimeBlock(Boolean isAllTime, LocalDateTime startTime, LocalDateTime endTime) {
+        this.isAllTime = isAllTime;
         this.startTime = startTime;
         this.endTime = endTime;
         this.updatedAt = LocalDateTime.now();
