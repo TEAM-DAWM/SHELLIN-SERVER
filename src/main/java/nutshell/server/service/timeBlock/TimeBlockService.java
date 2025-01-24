@@ -66,7 +66,7 @@ public class TimeBlockService {
             throw new BusinessException(BusinessErrorCode.TIME_CONFLICT);
         }
         TimeBlock timeBlock = timeBlockRetriever.findByTaskAndId(task, timeBlockId);
-        timeBlockEditor.updateTime(timeBlock, timeBlockRequestDto.isAllTime(), timeBlock,timeBlockRequestDto.startTime(), timeBlockRequestDto.endTime());
+        timeBlockEditor.updateTime(timeBlock, timeBlockRequestDto.isAllTime(),timeBlockRequestDto.startTime(), timeBlockRequestDto.endTime());
     }
 
     @Transactional
@@ -96,7 +96,7 @@ public class TimeBlockService {
                                 .name(task.getName())
                                 .status(task.getStatus().getContent())
                                 .timeBlocks(timeBlockRetriever.findAllByTaskIdAndTimeRange(task, startTime, endTime).stream().map(
-                                    timeBlock -> TimeBlock.of(timeBlock.isAllTime, timeBlock.startTime, timeBlock.endTime)
+                                        timeBlock -> TimeBlockDto.of(timeBlock.getId(), timeBlock.getIsAllTime(), timeBlock.getStartTime(), timeBlock.getEndTime())
                                 ).toList())
                                 .build()
                 ).toList();
