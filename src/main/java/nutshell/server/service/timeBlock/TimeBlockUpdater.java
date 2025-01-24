@@ -10,9 +10,10 @@ public class TimeBlockUpdater {
 
     public void updateTime(
             final TimeBlock timeBlock,
+            final Boolean isAllTime,
             final LocalDateTime startTime,
             final LocalDateTime endTime
     ){
-        timeBlock.updateTimeBlock(startTime, endTime);
+        timeBlock.updateTimeBlock(isAllTime, startTime, endTime);
     }
 }
