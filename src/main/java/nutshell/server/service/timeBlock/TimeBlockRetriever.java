@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import nutshell.server.domain.Task;
 import nutshell.server.domain.TimeBlock;
 import nutshell.server.domain.User;
-import nutshell.server.dto.timeBlock.response.TimeBlockDto;
 import nutshell.server.exception.NotFoundException;
 import nutshell.server.exception.code.NotFoundErrorCode;
 import nutshell.server.repository.TimeBlockRepository;
@@ -58,7 +57,7 @@ public class TimeBlockRetriever {
         return timeBlockRepository.existsByTaskAndStartTimeBetweenAndEndTimeBetween(task, startTime, endTime);
     }
 
-    public List<TimeBlockDto> findAllByTaskIdAndTimeRange(
+    public List<TimeBlock> findAllByTaskIdAndTimeRange(
             final Task task,
             final LocalDateTime startTime,
             final LocalDateTime endTime
