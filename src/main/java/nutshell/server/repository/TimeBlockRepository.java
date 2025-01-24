@@ -48,7 +48,7 @@ public interface TimeBlockRepository extends JpaRepository<TimeBlock, Long> {
     );
 
 
-    @Query("SELECT new nutshell.server.dto.timeBlock.response.TimeBlockDto(t.id, t.startTime, t.endTime) " +
+    @Query("SELECT new nutshell.server.dto.timeBlock.response.TimeBlockDto(t.id, t.isAllTime, t.startTime, t.endTime) " +
             "FROM TimeBlock t " +
             "WHERE t.task = :task " +
             "AND t.startTime between :startTime and :endTime " +
