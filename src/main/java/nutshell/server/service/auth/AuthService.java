@@ -31,9 +31,6 @@ public class AuthService {
     @Value("${spring.security.oauth2.client.registration.google.client-secret}")
     private String clientSecret;
 
-    @Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
-    private String redirectUrl;
-
     private final JwtUtil jwtUtil;
     private final TokenRetriever tokenRetriever;
     private final UserRetriever userRetriever;
@@ -56,7 +53,7 @@ public class AuthService {
     }
 
     @Transactional
-    public JwtTokensDto googleLogin(final String code) {
+    public JwtTokensDto googleLogin(final String code, final String redirectUrl) {
         GoogleTokenResponse googleTokenResponse = googleService.getToken(code, clientId, clientSecret, redirectUrl);
         GoogleUserInfoResponse googleUserInfoResponse = googleService.getUserInfo(googleTokenResponse.accessToken());
         User user = userRetriever.findBySerialIdAndEmailOrGet(

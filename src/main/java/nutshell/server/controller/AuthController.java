@@ -16,9 +16,10 @@ public class AuthController {
 
     @PostMapping("/auth/login/google")
     public ResponseEntity<JwtTokensDto> googleLogin(
-            @RequestParam final String code
+            @RequestParam final String code,
+            @RequestParam final String redirectUrl
     ) {
-        return ResponseEntity.ok(authService.googleLogin(code));
+        return ResponseEntity.ok(authService.googleLogin(code, redirectUrl));
     }
 
     @PostMapping("/auth/re-issue")
