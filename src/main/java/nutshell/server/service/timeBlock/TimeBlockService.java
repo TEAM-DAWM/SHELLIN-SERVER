@@ -40,7 +40,7 @@ public class TimeBlockService {
         checkValid(timeBlockRequestDto.startTime(), timeBlockRequestDto.endTime());
         User user = userRetriever.findByUserId(userId);
         Task task = taskRetriever.findByUserAndId(user, taskId);
-        if (timeBlockRetriever.existsByTaskUserAndStartTimeBetweenAndEndTimeBetween(user, timeBlockRequestDto.startTime(), timeBlockRequestDto.endTime())) {
+        if ((timeBlockRequestDto.isAllTime() == null || !timeBlockRequestDto.isAllTime()) && timeBlockRetriever.existsByTaskUserAndStartTimeBetweenAndEndTimeBetween(user, timeBlockRequestDto.startTime(), timeBlockRequestDto.endTime())) {
             throw new BusinessException(BusinessErrorCode.TIME_CONFLICT);
         }
         return timeBlockSaver.save(TimeBlock.builder()
@@ -62,7 +62,7 @@ public class TimeBlockService {
         checkValid(timeBlockRequestDto.startTime(), timeBlockRequestDto.endTime());
         User user = userRetriever.findByUserId(userId);
         Task task = taskRetriever.findByUserAndId(user, taskId);
-        if (timeBlockRetriever.existsByTaskAndStartTimeBetweenAndEndTimeBetweenAndIdNot(user, timeBlockId, timeBlockRequestDto.startTime(), timeBlockRequestDto.endTime())) {
+        if ((timeBlockRequestDto.isAllTime() == null || !timeBlockRequestDto.isAllTime()) && timeBlockRetriever.existsByTaskAndStartTimeBetweenAndEndTimeBetweenAndIdNot(user, timeBlockId, timeBlockRequestDto.startTime(), timeBlockRequestDto.endTime())) {
             throw new BusinessException(BusinessErrorCode.TIME_CONFLICT);
         }
         TimeBlock timeBlock = timeBlockRetriever.findByTaskAndId(task, timeBlockId);
