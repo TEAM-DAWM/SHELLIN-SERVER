@@ -81,12 +81,9 @@ public class Task {
     public void updateTask(String name, String description, LocalDate deadLineDate, LocalTime deadLineTime) {
         if (name != null && !name.equals(""))
             this.name = name;
-        if (description != null && !description.equals(""))
-            this.description = description;
-        if(deadLineDate != null)
-            this.deadLineDate = deadLineDate;
-        if(deadLineTime != null)
-            this.deadLineTime = deadLineTime;
+        this.description = description;
+        this.deadLineDate = deadLineDate;
+        this.deadLineTime = deadLineTime;
         this.updatedAt = LocalDateTime.now();
     }
 
