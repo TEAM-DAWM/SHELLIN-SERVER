@@ -134,6 +134,9 @@ public class TaskService {
                                 taskRetriever.findAllByCustomOrderAndAssignedDateIsNotNull(userId, targetDate, taskOrder.getTaskList());
                         default -> throw new IllegalArgumentException(IllegalArgumentErrorCode.INVALID_ARGUMENTS);
                     };
+            tasks = tasks.stream.filter(
+                    task -> ((targetDate.isAfter(LocalDate.now()) && task.getAssignedDate().isEqual(targetDate)) || !targetDate.isAfter(LocalDate.now()))
+            ).toList();
         } else {
             TaskOrder taskOrder = taskOrderRetriever.findById(userId, false, null);
             tasks = switch (order) {
