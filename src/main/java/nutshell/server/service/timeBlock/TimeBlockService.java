@@ -43,8 +43,8 @@ public class TimeBlockService {
         if ((timeBlockRequestDto.isAllTime() == null || !timeBlockRequestDto.isAllTime()) && timeBlockRetriever.existsByTaskUserAndStartTimeBetweenAndEndTimeBetween(user, timeBlockRequestDto.startTime(), timeBlockRequestDto.endTime())) {
             throw new BusinessException(BusinessErrorCode.DUP_TIMEBLOCK_CONFLICT);
         }
-        LocalDateTime startOfDay = timeBlockRequestDto.startTime().toLocalDate.atStartOfDay();
-        LocalDateTime endOfDay = timeBlockRequestDto.endTime().toLocalDate.atTime(23,59,59);
+        LocalDateTime startOfDay = timeBlockRequestDto.startTime().toLocalDate().atStartOfDay();
+        LocalDateTime endOfDay = timeBlockRequestDto.endTime().toLocalDate().atTime(23,59,59);
         if (timeBlockRetriever.existsByTaskAndStartTimeBetweenAndEndTimeBetween(task, startOfDay, endOfDay))
             throw new BusinessException(BusinessErrorCode.DUP_DAY_TIMEBLOCK_CONFLICT);
         return timeBlockSaver.save(TimeBlock.builder()
