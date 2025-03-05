@@ -15,7 +15,8 @@ public interface TimeBlockRepository extends JpaRepository<TimeBlock, Long> {
             "where t.task.user = :user and " +
             "((t.startTime > :startTime and t.startTime < :endTime) or " +
             "(t.endTime > :startTime and t.endTime < :endTime) or " +
-            "(t.startTime >= :startTime and t.endTime <= :endTime))"
+            "(t.startTime >= :startTime and t.endTime <= :endTime) or " +
+            "(t.startTime <= :startTime and t.endTime >= :endTime))"
             )
     Boolean existsByTaskUserAndStartTimeBetweenAndEndTimeBetween(
             final User user,
@@ -28,7 +29,8 @@ public interface TimeBlockRepository extends JpaRepository<TimeBlock, Long> {
             "t.id != :id and " +
             "((t.startTime > :startTime and t.startTime < :endTime) or " +
             "(t.endTime > :startTime and t.endTime < :endTime) or " +
-            "(t.startTime >= :startTime and t.endTime <= :endTime))"
+            "(t.startTime >= :startTime and t.endTime <= :endTime) or " +
+            "(t.startTime <= :startTime and t.endTime >= :endTime))"
     )
     Boolean existsByTaskAndStartTimeBetweenAndEndTimeBetweenAndIdNot(
             final User user,
