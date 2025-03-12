@@ -53,12 +53,11 @@ public class TaskService {
         } else {
             if (taskStatusDto.status().equals("완료")) {
                 taskUpdater.updateEndDate(task, taskStatusDto.targetDate());
-            } else {
-                if (task.getEndDate() != null)
-                    taskUpdater.updateEndDate(task, null);
-                else if (task.getAssignedDate() == null)
-                    taskUpdater.updateAssignedDate(task, taskStatusDto.targetDate());
+            } else if (task.getEndDate() != null){
+                taskUpdater.updateEndDate(task, null);
             }
+            if (task.getAssignedDate() == null)
+                taskUpdater.updateAssignedDate(task, taskStatusDto.targetDate());
             taskUpdater.updateStatus(task, Status.fromContent(taskStatusDto.status()));
         }
         log.info("task: {}", task.getAssignedDate());
