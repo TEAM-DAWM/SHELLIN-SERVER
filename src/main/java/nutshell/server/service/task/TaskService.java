@@ -45,9 +45,11 @@ public class TaskService {
         User user = userRetriever.findByUserId(userId);
         Task task = taskRetriever.findByUserAndId(user, taskId);
         if (taskStatusDto.targetDate() == null) {    //target area에서 staging area로 넘어갈 경우
-            taskUpdater.updateAssignedDate(task, null);
-            taskUpdater.updateEndDate(task, null);
-            taskUpdater.updateStatus(task, Status.TODO);
+            if (task.getAssignedDate() != null){
+                taskUpdater.updateAssignedDate(task, null);
+                taskUpdater.updateEndDate(task, null);
+            }
+            taskUpdater.updateStatus(task, taskStatusDto.status() == null ? Status.TODO : Status.fromContent(taskStatusDto.status()));
         } else {
             if (taskStatusDto.status().equals("완료")) {
                 taskUpdater.updateEndDate(task, taskStatusDto.targetDate());
