@@ -21,7 +21,7 @@ import java.time.LocalDate;
 public class TaskController {
     private final TaskService taskService;
 
-    // task 상태 수정 PATCH API
+    // task 상태 수정 area 변경 PATCH API
     @PatchMapping("/tasks/{taskId}/status")
     public ResponseEntity<Void> updateStatus(
             @UserId final Long userId,
